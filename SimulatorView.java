@@ -123,6 +123,9 @@ public class SimulatorView extends JFrame
         contents.add(population, BorderLayout.SOUTH);
         */
         
+        //defaultCloseOperation
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        
         pack();
         setVisible(true);
     }
