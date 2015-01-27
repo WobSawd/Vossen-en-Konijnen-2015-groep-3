@@ -32,6 +32,9 @@ public class Simulator
     // A graphical view of the simulation.
     private SimulatorView view;
     
+    //De simulator
+    public static Simulator simulator;
+    
     /**
      * Construct a simulation field with default size.
      */
@@ -64,6 +67,9 @@ public class Simulator
         
         // Setup a valid starting point.
         reset();
+        
+        //voeg toe aan de variabel simulator.
+        simulator = this;
     }
     
     /**

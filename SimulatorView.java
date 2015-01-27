@@ -31,6 +31,8 @@ public class SimulatorView extends JFrame
     private Map<Class, Color> colors;
     // A statistics object computing and storing simulation information
     private FieldStats stats;
+    
+    
 
     /**
      * Create a view of the given width and height.
@@ -39,6 +41,13 @@ public class SimulatorView extends JFrame
      */
     public SimulatorView(int height, int width)
     {
+    	//JPanels voor de inhoud van het frame.
+    	JPanel north = new JPanel();
+    	JPanel south = new JPanel();
+    	JPanel middle = new JPanel();
+    	JPanel west = new JPanel();
+    	JPanel east = new JPanel();
+    	
         stats = new FieldStats();
         colors = new LinkedHashMap<Class, Color>();
 
@@ -51,9 +60,69 @@ public class SimulatorView extends JFrame
         fieldView = new FieldView(height, width);
 
         Container contents = getContentPane();
+        contents.setLayout(new BoxLayout(contents, BoxLayout.Y_AXIS));
+        
+        
+        //maak de buttons
+        JButton stap1 = new JButton("1 Stap");
+        JButton stap100 = new JButton("100 Stappen");
+        
+        //actionlistener aan button1 toevoegen
+		stap1.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				Simulator.simulator.simulate(1);
+			}
+		});
+		
+		//actionlistener aan button100 toevoegen
+				stap100.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent event) {
+						for(int i = 0; i<100; i++){
+							Simulator.simulator.simulateOneStep();
+							fieldView.update(fieldView.getGraphics());
+						}
+					}
+				});
+		
+		
+        
+        //vul north
+        north.add(stepLabel);
+        
+        //vul middle
+        middle.setLayout(new BoxLayout(middle, BoxLayout.X_AXIS));
+        middle.add(west);
+        middle.add(east);
+        
+        //vul west
+        //TODO buttons;
+        west.setLayout(new BoxLayout(west, BoxLayout.Y_AXIS));
+        west.add(stap1);
+        west.add(Box.createRigidArea(new Dimension(0,5)));
+        west.add(stap100);
+        
+        //vul east
+        east.add(fieldView);
+        
+        //vul south
+        south.add(population);
+        
+        
+        //vul contents
+        contents.add(north);
+        contents.add(middle);
+        contents.add(south);
+        
+        
+        
+        /* old layout
         contents.add(stepLabel, BorderLayout.NORTH);
         contents.add(fieldView, BorderLayout.CENTER);
         contents.add(population, BorderLayout.SOUTH);
+        */
+        
         pack();
         setVisible(true);
     }
